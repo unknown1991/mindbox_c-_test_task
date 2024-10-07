@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FigureLibrary.Figures
 {
-    public class Figure
+    public abstract class Figure
     {
         protected double area;
 
