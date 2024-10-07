@@ -15,15 +15,20 @@ namespace FigureLibrary.Figures
 
         public Triangle(double a, double b, double c)
         {
-            if (a <= 0 || b <= 0 || c <= 0)
-                throw new ArgumentException("Side of triangle should be a positive double");
-            else if (a + b < c || b + c < a || a + c < b)
-                throw new ArgumentException("Provided sides do not form a triangle");
+            this.checkArgs(a, b, c);
 
             this.SideA = a; this.SideB = b; this.SideC = c;
 
             this.calculateArea(a, b, c);
             this.calculateIsRectangular(a, b, c);            
+        }
+
+        private void checkArgs(double a, double b, double c)
+        {
+            if (a <= 0 || b <= 0 || c <= 0)
+                throw new ArgumentException("Side of triangle should be a positive double");
+            else if (a + b < c || b + c < a || a + c < b)
+                throw new ArgumentException("Provided sides do not form a triangle");
         }
 
         private void calculateArea(double a, double b, double c)

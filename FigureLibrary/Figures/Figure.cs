@@ -16,14 +16,14 @@ namespace FigureLibrary.Figures
             return area;
         }
 
-        public static double GetArea(string fullClassName, params object[] args)
+        public static Figure CreateFigure(string fullClassName, params object[] args)
         {
             var type = Type.GetType(fullClassName);
 
             if (type is not null)
             {
                 Figure figure = (Figure?)Activator.CreateInstance(type, args) ?? throw new ArgumentException("Figure object wasn't created.");
-                return figure.GetArea();
+                return figure;
             }       
 		    else
             {
@@ -32,6 +32,6 @@ namespace FigureLibrary.Figures
         }
 
         public override string ToString() =>
-            $"Type: {this.GetType().Name}, Area = {area:F3}";
+            $"Figure type: {this.GetType().Name}, Area = {area:F3}";
     }
 }

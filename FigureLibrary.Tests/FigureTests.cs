@@ -2,39 +2,28 @@ using FigureLibrary.Figures;
 
 namespace FigureLibrary.Tests
 {
-    public class UnitTest1
+    public class FigureTests
     {
         private double precision = 0.0001;
 
-        [Fact]
-        public void Test1()
-        {
-            double area = Figure.GetArea("FigureLibrary.Figures.Circle", 5.0);
-            Assert.Equal(78.53981, area, precision);
-        }
-
         [Theory]
-        [InlineData(2.0, 3.0, -3.0)]
-        [InlineData(0.0, 1.0, 2.0)]
-        [InlineData(0.0, -1.0, -2.0)]
-        [InlineData(4.0, 0.0, 4.0)]
-        [InlineData(3.0, 4.0, 8.0)]
-        public void TriangleConstructor_ShouldThrow_ArgumentException_WhenSideLength_IsIncorrect(double a, double b, double c)
+        [InlineData("FigureLibrary.Figures.Circle", 5.0)]
+        [InlineData("FigureLibrary.Figures.Triangle", 5.0, 6.0, 7.0)]
+        public void StaticCreateFigureMethod_ShoudReturn_ExpectedTypeObject(string fullClassName, params object[] args)
         {
-            Assert.Throws<ArgumentException>(() =>
-            {
-                var triangle = new Triangle(a, b, c);
-            });
+            var figure = Figure.CreateFigure(fullClassName, args);
+
+            Assert.Equal(fullClassName, figure.GetType().FullName);
         }
 
         [Theory]
         [InlineData("NonExistentFigure")]
         [InlineData("adfsfsofsn")]
-        public void StaticGetAreaMethod_ShouldThrow_ArgumentException_WhenProvidedType_DoesNotExist(string incorrectType)
+        public void StaticCreateFigureMethod_ShouldThrow_ArgumentException_WhenProvidedType_DoesNotExist(string incorrectType)
         {
             Assert.Throws<ArgumentException>(() =>
             {
-                Figure.GetArea(incorrectType);
+                Figure.CreateFigure(incorrectType);
             });
         }
 
@@ -57,6 +46,20 @@ namespace FigureLibrary.Tests
             var circle = new Circle(r);
 
             Assert.Equal(expectedArea, circle.GetArea(), precision);
+        }
+
+        [Theory]
+        [InlineData(2.0, 3.0, -3.0)]
+        [InlineData(0.0, 1.0, 2.0)]
+        [InlineData(0.0, -1.0, -2.0)]
+        [InlineData(4.0, 0.0, 4.0)]
+        [InlineData(3.0, 4.0, 8.0)]
+        public void TriangleConstructor_ShouldThrow_ArgumentException_WhenSideLength_IsIncorrect(double a, double b, double c)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                var triangle = new Triangle(a, b, c);
+            });
         }
 
         [Theory]
